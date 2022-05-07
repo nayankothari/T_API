@@ -68,3 +68,5 @@ class CustomerDetails(models.Model):
     def __str__(self):
         return self.uid
 
+class KeyManagement(models.Model):
+    pass
