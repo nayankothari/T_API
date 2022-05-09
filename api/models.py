@@ -97,6 +97,7 @@ class KeyManagement(models.Model):
     backup = models.BooleanField(default=True)
     customer_name = models.CharField(max_length=255, blank=True)
     shop_name = models.CharField(max_length=355, blank=True)
+    head_office = models.CharField(max_length=20, blank=True)
     email = models.CharField(max_length=80, blank=True)
     number = models.CharField(max_length=15, blank=True)
     key_status = models.IntegerField(default=0)
