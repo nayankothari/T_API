@@ -1,3 +1,5 @@
+import uuid
+import random
 from django.db import models
 from datetime import datetime
 from django.utils import timezone
@@ -68,5 +70,39 @@ class CustomerDetails(models.Model):
     def __str__(self):
         return self.uid
 
+def public_key():
+    random_number = random.randrange(13, 16)
+    uni_id = str(uuid.uuid4().hex[:random_number]).upper()
+    return uni_id
+
+
 class KeyManagement(models.Model):
-    pass
+    public_key = models.CharField(max_length=16, unique=True, default=public_key, editable=False)
+    created = models.DateTimeField(auto_now_add=True, blank=True)
+    days_choics = (
+        ("30", "30 days"),
+        ("90", '90 days'),
+        ("180", '180 days'),
+        ("360", '360 days'))
+    valid_for_days = models.CharField(max_length=3, choices=days_choics, blank=False)
+    amount_choice = (
+        ("0", "Free"),
+        ("499", "499/-"),
+        ("1399", '1399/-'),
+        ("2499", '2499/-'),
+        ("3999", '3999/-'))
+    amount = models.CharField(max_length=4, choices=amount_choice, blank=False, default="Free")
+    rps = models.BooleanField(default=True)
+    cloud = models.BooleanField(default=True)
+    backup = models.BooleanField(default=True)
+    customer_name = models.CharField(max_length=255, blank=True)
+    shop_name = models.CharField(max_length=355, blank=True)
+    email = models.CharField(max_length=80, blank=True)
+    number = models.CharField(max_length=15, blank=True)
+    key_status = models.IntegerField(default=0)
+    activated_date = models.DateTimeField(blank=True,
+                                        default=timezone.now())
+    system_id = models.CharField(max_length=100, blank=True)
+
+    def __str__(self):
+        return (str(self.public_key) + "_" + str(self.key_status) + "_" + str(self.valid_for_days) + "_" + str(self.amount))
