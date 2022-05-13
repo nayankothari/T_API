@@ -1,10 +1,13 @@
 from requests import Response
 from rest_framework.views import APIView
 from api.models import *
+import datetime
+import json
 from api.serializers import RPSSerializer, DPSSerializer, CustomerSerializer, RPSSerializerTxn, DPSSerializerTxn
+from api.serializers import KeyManagementSerializer
 from django.http import JsonResponse
 from rest_framework.permissions import IsAuthenticated
-
+from django.core import serializers as szlr
 
 class RewardDetail(APIView):
     permission_classes = (IsAuthenticated,)
@@ -260,3 +263,40 @@ class CustomerRewardTransactionsByCard(APIView):
             response.update({"error": e})
             return JsonResponse(response, status=400)
         return JsonResponse(response, status=200)
+
+
+class KeyInstallation(APIView):
+    def post(self, request):
+        try:
+            key = request.POST.get("key")
+            obj = KeyManagement.objects.get(public_key=key, key_status=0)
+            serializer = KeyManagementSerializer(obj,data=request.POST, partial=True)
+            if serializer.is_valid():
+                serializer.save()
+                return JsonResponse(serializer.data, status=300)
+            return JsonResponse(serializer.errors, status=400)
+        except:
+            return JsonResponse({"data":"Key is already registered."}, status=405)
+
+
+class Activation_detail(APIView):
+    ''' 
+           filter data based on Key
+    '''
+    def get(self, request):
+        if request.GET.get("key"):
+            obj = KeyManagement.objects.filter(public_key=request.GET.get("key"))
+            if obj:
+                data = szlr.serialize('json', obj)
+                struct = json.loads(data)
+                data = struct[0]
+                data = data.get("fields")
+                data["server_datetime"] = datetime.datetime.strftime(datetime.datetime.now(), "%Y-%m-%d")
+                pop_list = ["created", "amount", "customer_name", "shop_name", "email", "number"]
+                for i in pop_list:
+                    data.pop(i)
+                return JsonResponse(data, status=200)
+            else:
+                return JsonResponse({"msg": "Key Expired."}, status=400)
+        else:
+            return JsonResponse({"msg": "Key Expired."}, status=400)

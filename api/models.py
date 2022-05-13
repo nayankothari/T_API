@@ -15,7 +15,7 @@ class RewardPointSystem(models.Model):
     created = models.DateTimeField(auto_now_add=True,
                                    blank=True)
     updated_date = models.DateTimeField(blank=False,
-                                        default=timezone.now())
+                                        default=timezone.now)
     mobile_number = models.BigIntegerField(blank=True)
     customer = models.CharField(max_length=256, blank=True)
     card_number = models.CharField(max_length=256, blank=True)
@@ -35,7 +35,7 @@ class DiscountPointSystem(models.Model):
     created = models.DateTimeField(auto_now_add=True,
                                    blank=True)
     updated_date = models.DateTimeField(blank=False,
-                                        default=timezone.now())
+                                        default=timezone.now)
     mobile_number = models.BigIntegerField(blank=True)
     customer = models.CharField(max_length=256, blank=True)
     card_number = models.CharField(max_length=256, blank=True)
@@ -56,7 +56,7 @@ class CustomerDetails(models.Model):
     created = models.DateTimeField(auto_now_add=True,
                                    blank=True)
     updated_date = models.DateTimeField(blank=False,
-                                        default=timezone.now())
+                                        default=timezone.now)
     customer_name = models.CharField(max_length=256, blank=True)
     number = models.BigIntegerField(blank=False)
     alt_number = models.CharField(max_length=256, blank=True)
@@ -102,8 +102,8 @@ class KeyManagement(models.Model):
     number = models.CharField(max_length=15, blank=True)
     key_status = models.IntegerField(default=0)
     activated_date = models.DateTimeField(blank=True,
-                                        default=timezone.now())
+                                        default=timezone.now)
     system_id = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
-        return (str(self.public_key) + "_" + str(self.key_status) + "_" + str(self.valid_for_days) + "_" + str(self.amount))
+        return (str(self.public_key) + "__" + str(self.key_status) + "__" + str(self.valid_for_days) + "__" + str(self.amount))

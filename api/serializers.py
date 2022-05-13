@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from api.models import RewardPointSystem, DiscountPointSystem, CustomerDetails
+from api.models import RewardPointSystem, DiscountPointSystem, CustomerDetails, KeyManagement
 
 
 class RPSSerializer(serializers.ModelSerializer):
@@ -73,3 +73,14 @@ class DPSSerializerTxn(serializers.ModelSerializer):
         return instance
 
 
+class KeyManagementSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = KeyManagement
+        fields = ["valid_for_days", "rps", "cloud", "backup", "customer_name",
+                "shop_name", "head_office", "email", "number", "key_status", "activated_date",
+                "system_id"]
+    def update(self, instance, validated_data):
+        for key, value in validated_data.items():
+            setattr(instance, key, value)
+        instance.save()
+        return instance
