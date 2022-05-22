@@ -15,7 +15,7 @@ class RewardPointSystem(models.Model):
     created = models.DateTimeField(auto_now_add=True,
                                    blank=True)
     updated_date = models.DateTimeField(blank=False,
-                                        default=timezone.now)
+                                        default=timezone.now, auto_now=True)
     mobile_number = models.BigIntegerField(blank=True)
     customer = models.CharField(max_length=256, blank=True)
     card_number = models.CharField(max_length=256, blank=True)
@@ -35,7 +35,7 @@ class DiscountPointSystem(models.Model):
     created = models.DateTimeField(auto_now_add=True,
                                    blank=True)
     updated_date = models.DateTimeField(blank=False,
-                                        default=timezone.now)
+                                        default=timezone.now, auto_now=True)
     mobile_number = models.BigIntegerField(blank=True)
     customer = models.CharField(max_length=256, blank=True)
     card_number = models.CharField(max_length=256, blank=True)
@@ -56,7 +56,7 @@ class CustomerDetails(models.Model):
     created = models.DateTimeField(auto_now_add=True,
                                    blank=True)
     updated_date = models.DateTimeField(blank=False,
-                                        default=timezone.now)
+                                        default=timezone.now, auto_now=True)
     customer_name = models.CharField(max_length=256, blank=True)
     number = models.BigIntegerField(blank=False)
     alt_number = models.CharField(max_length=256, blank=True)
