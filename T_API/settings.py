@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-ops1(6g$i4y-&gzp-n!h9yb580jj7yq$4+n%j1u$_x))apd*o4
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["206.189.133.131"]
+ALLOWED_HOSTS = ["206.189.133.131", "api.twinbook.in"]
 
 
 # Application definition
@@ -148,9 +148,6 @@ REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
     ),
-    'DEFAULT_PARSER_CLASSES': (
-        'rest_framework.parsers.JSONParser',
-    )
 }
 
 
