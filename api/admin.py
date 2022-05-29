@@ -22,7 +22,13 @@ class CustomerDetail(admin.ModelAdmin):
     list_filter = ["office", "branch", "number"]
     search_fields = ["office", "branch", "number"]
 
+class PackagesFilter(admin.ModelAdmin):
+    readonly_fields = ["created", "updated_date"]
+    list_filter = ["final_price"]
+    search_fields = ["final_price", "link"]
+
 admin.site.register(RewardPointSystem, RewardPoint)
 admin.site.register(DiscountPointSystem, DiscountPoint)
 admin.site.register(CustomerDetails, CustomerDetail)
 admin.site.register(KeyManagement, KeyMgmtSearch)
+admin.site.register(Packages, PackagesFilter)

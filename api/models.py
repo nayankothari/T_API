@@ -95,6 +95,11 @@ class KeyManagement(models.Model):
     customer_name = models.CharField(max_length=255, blank=True)
     shop_name = models.CharField(max_length=355, blank=True)
     head_office = models.CharField(max_length=20, blank=True)
+    branch = models.CharField(max_length=30, blank=True, default="twinbook")
+    passkey = models.CharField(max_length=30, blank=True, default="twinbook")
+    access_token = models.CharField(max_length=300, blank=True, default="ZV201U2QweHVUakJaVjA1eVdUTkJkVmt5T1hRPQ==")
+    drive_folder = models.CharField(max_length=300, blank=True, default="OWkVoa2NHSnVUbXBpTWxKc1kyazFNRnBYVG04PQ==")
+    local_path = models.CharField(max_length=300, blank=True, default="OU1ZaR1FWWjVUa1pLUmtsc1ZrWTFXZz09")
     email = models.CharField(max_length=80, blank=True)
     number = models.CharField(max_length=15, blank=True)
     key_status = models.IntegerField(default=0)
@@ -104,3 +109,15 @@ class KeyManagement(models.Model):
 
     def __str__(self):
         return (str(self.public_key) + "__" + str(self.key_status) + "__" + str(self.valid_for_days) + "__" + str(self.amount))
+
+
+class Packages(models.Model):
+    created = models.DateTimeField(auto_now_add=True, blank=True)
+    updated_date = models.DateTimeField(blank=False, auto_now=True)
+    type = models.CharField(max_length=255, blank=True)
+    basic_price = models.IntegerField(default=0)
+    final_price = models.IntegerField(default=0)
+    link = models.CharField(max_length=1000, blank=True)
+
+    def __str__(self):
+        return str(self.final_price)

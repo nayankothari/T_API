@@ -4,7 +4,7 @@ from api.models import *
 import datetime
 import json
 from api.serializers import RPSSerializer, DPSSerializer, CustomerSerializer, RPSSerializerTxn, DPSSerializerTxn
-from api.serializers import KeyManagementSerializer
+from api.serializers import KeyManagementSerializer, PackageSerializer
 from django.http import JsonResponse
 from rest_framework.permissions import IsAuthenticated
 from django.core import serializers as szlr
@@ -300,3 +300,12 @@ class Activation_detail(APIView):
                 return JsonResponse({"msg": "Key Expired."}, status=400)
         else:
             return JsonResponse({"msg": "Key Expired."}, status=400)
+
+class PaclageInstaller(APIView):
+    def get(self, request):
+        obj = Packages.objects.all()
+        if obj:
+            serializer = PackageSerializer(obj, many=True)
+            return JsonResponse(serializer.data, safe=False)
+        else:
+            return JsonResponse({"msg": "No Packages Found."}, status=400)

@@ -25,6 +25,7 @@ urlpatterns = [
          name="customer_office_mobile_card"),
     path('r_ins', views.KeyInstallation.as_view(), name="r_ins"),
     path('r_sta', views.Activation_detail.as_view(), name="r_sta"),
+    path('available_packages', views.PaclageInstaller.as_view(), name="Available packages"),
 ]
 
 
