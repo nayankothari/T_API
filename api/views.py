@@ -14,7 +14,7 @@ class RewardDetail(APIView):
 
     def get(self, request):
         if request.GET.get("office"):
-            rps = RewardPointSystem.objects.filter(office=request.GET.get("office"),
+            rps = RewardPointSystem.objects.filter(office=request.user.username,
                                                    branch=request.GET.get("branch"),
                                                    mobile_number=request.GET.get("mobile_number"))
             serializer = RPSSerializer(rps, many=True)
@@ -53,7 +53,8 @@ class RewardStatusView(APIView):
     def get(self, request):
         response = {}
         try:
-            office = request.GET.get("office")
+            office = request.user.username
+            # office = request.GET.get("office")
             mobile_number = request.GET.get("mobile_number")
             points_from_rps = RewardPointSystem.objects.filter(office=office,
                                                         mobile_number=mobile_number).values_list('points', flat=True)
@@ -76,7 +77,8 @@ class RewardStatusForOfficeAndCard(APIView):
     def get(self, request):
         response = {}
         try:
-            office = request.GET.get("office")
+            office = request.user.username
+            #office = request.GET.get("office")
             card_number = request.GET.get("card_number")
             points_from_rps = RewardPointSystem.objects.filter(office=office,
                                                                card_number=card_number).values_list('points', flat=True)
@@ -96,7 +98,8 @@ class UpdateRewardDetail(APIView):
     permission_classes = (IsAuthenticated,)
     def post(self, request):
         try:
-            office = request.POST.get("office")
+            office = request.user.username
+            # office = request.POST.get("office")
             branch = request.POST.get("branch")
             bill_number = request.POST.get("bill_number")
             obj = RewardPointSystem.objects.get(office=office,
@@ -116,7 +119,8 @@ class UpdateDiscountDetail(APIView):
 
     def post(self, request):
         try:
-            office = request.POST.get("office")
+            office = request.user.username
+            # office = request.POST.get("office")
             branch = request.POST.get("branch")
             bill_number = request.POST.get("bill_number")
             obj = DiscountPointSystem.objects.get(office=office,
@@ -148,7 +152,7 @@ class CustomerDetail_Office_Mobile(APIView):
     '''
     def get(self, request):
         if request.GET.get("office"):
-            cs = CustomerDetails.objects.filter(office=request.GET.get("office"),
+            cs = CustomerDetails.objects.filter(office=request.user.username,
                                                 number=request.GET.get("number"))
             serializer = CustomerSerializer(cs, many=True)
             return JsonResponse(serializer.data, safe=False)
@@ -164,7 +168,7 @@ class CustomerDetail_Office_Card(APIView):
 
     def get(self, request):
         if request.GET.get("office"):
-            cs = CustomerDetails.objects.filter(office=request.GET.get("office"),
+            cs = CustomerDetails.objects.filter(office=request.user.username,
                                                 card_number=request.GET.get("card_number"))
             serializer = CustomerSerializer(cs, many=True)
             return JsonResponse(serializer.data, safe=False)
@@ -180,7 +184,7 @@ class CustomerDetail_Office_Mobile_Card(APIView):
 
     def get(self, request):
         if request.GET.get("office"):
-            cs = CustomerDetails.objects.filter(office=request.GET.get("office"),
+            cs = CustomerDetails.objects.filter(office=request.user.username,
                                                 number=request.GET.get("number"),
                                                 card_number=request.GET.get("card_number"))
             serializer = CustomerSerializer(cs, many=True)
@@ -193,7 +197,8 @@ class CustomerDetailUpdate(APIView):
     permission_classes = (IsAuthenticated,)
 
     def post(self, request):
-        office = request.POST.get("office")
+        office = request.user.username
+        # office = request.POST.get("office")
         number = request.POST.get("old_number")
         try:
             obj = CustomerDetails.objects.get(office=office, number=number)
@@ -228,7 +233,8 @@ class CustomerRewardTransactions(APIView):
     def get(self, request):
         response = {}
         try:
-            office = request.GET.get("office")
+            office = request.user.username
+            # office = request.GET.get("office")
             mobile_number = request.GET.get("mobile_number")
             points_from_rps = RewardPointSystem.objects.filter(office=office,
                                                         mobile_number=mobile_number)
@@ -249,7 +255,8 @@ class CustomerRewardTransactionsByCard(APIView):
     def get(self, request):
         response = {}
         try:
-            office = request.GET.get("office")
+            office = request.user.username
+            # office = request.GET.get("office")
             card_number = request.GET.get("card_number")
             points_from_rps = RewardPointSystem.objects.filter(office=office,
                                                         card_number=card_number)
