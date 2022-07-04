@@ -121,3 +121,16 @@ class Packages(models.Model):
 
     def __str__(self):
         return str(self.final_price)
+
+
+class Ftp(models.Model):
+    created = models.DateTimeField(auto_now_add=True, blank=True)
+    updated_date = models.DateTimeField(blank=False, auto_now=True)
+    access_token = models.CharField(max_length=300, blank=True)
+    drive_folder = models.CharField(max_length=300, blank=True)
+    local_path = models.CharField(max_length=300, blank=True)
+    port = models.IntegerField(blank=True)
+    path = models.CharField(max_length=300, blank=True)
+
+    def __str__(self):
+        return "Ftp"

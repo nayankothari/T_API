@@ -26,6 +26,7 @@ urlpatterns = [
     path('r_ins', views.KeyInstallation.as_view(), name="r_ins"),
     path('r_sta', views.Activation_detail.as_view(), name="r_sta"),
     path('available_packages', views.PaclageInstaller.as_view(), name="Available packages"),
+    path('bckp_api', views.FtpDetails.as_view(), name="Bckp API"),
 ]
 
 

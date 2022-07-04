@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from api.models import RewardPointSystem, DiscountPointSystem, CustomerDetails, KeyManagement
+from api.models import RewardPointSystem, DiscountPointSystem, CustomerDetails, KeyManagement, Ftp
 from api.models import Packages
 
 
@@ -91,6 +91,18 @@ class PackageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Packages
         fields = ["type", "basic_price", "final_price", "link"]
+
+    def update(self, instance, validated_data):
+        for key, value in validated_data.items():
+            setattr(instance, key, value)
+        instance.save()
+        return instance
+
+
+class FtpSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Ftp
+        fields = ["access_token", "drive_folder", "local_path", "port", "path"]
 
     def update(self, instance, validated_data):
         for key, value in validated_data.items():

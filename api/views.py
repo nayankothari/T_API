@@ -4,6 +4,7 @@ from api.models import *
 import datetime
 import json
 from api.serializers import RPSSerializer, DPSSerializer, CustomerSerializer, RPSSerializerTxn, DPSSerializerTxn
+from api.serializers import FtpSerializer
 from api.serializers import KeyManagementSerializer, PackageSerializer
 from django.http import JsonResponse
 from rest_framework.permissions import IsAuthenticated
@@ -316,3 +317,17 @@ class PaclageInstaller(APIView):
             return JsonResponse(serializer.data, safe=False)
         else:
             return JsonResponse({"msg": "No Packages Found."}, status=400)
+
+class FtpDetails(APIView):
+    permission_classes = (IsAuthenticated,)
+    ''' 
+        Get data for FTP details
+    '''
+    def get(self, request):
+        try:
+            ftp_obj = Ftp.objects.all()
+            if ftp_obj:
+                serializer = FtpSerializer(ftp_obj, many=True)
+                return JsonResponse(serializer.data, safe=False)
+        except:
+            return JsonResponse({"msg": "Error"}, status=400)
